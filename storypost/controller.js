@@ -1,14 +1,13 @@
 const express = require('express');
 const { nextTick } = require('process');
-const { getStorypostById , getStorycommentById } = require('./storypost');
+const { createStorypostSQL , createStorycommentSQL , getStorypostById , getStorycommentById } = require('./storypost');
 
 // create post
 createStorypost = async (req, res, next) => {
-    console.log('in here 2')
-    const storypost = await createStorypost(req.body)
+    const storypost = await createStorypostSQL(req.body);
     
     try {
-        res.send({
+        res.status(201).send({
             data: storypost
         });
     } catch (error) {
@@ -18,10 +17,23 @@ createStorypost = async (req, res, next) => {
 }
 
 // create comment
+createStorycomment = async (req, res, next) => {
+    const storypost = await createStorycommentSQL(req.params.getStorypostId, req.body);
+    
+    try {
+        res.status(201).send({
+            data: storypost
+        });
+    } catch (error) {
+        console.log(error);
+        next(Error(error.message));
+    }
+}
+
 
 // get all post
 getStorypost = async (req, res, next) => {
-    const storypost = await getStorypostById(req.params.getStorypostId)
+    const storypost = await getStorypostById(req.params.getStorypostId);
     
     try {
         res.send({
@@ -35,7 +47,7 @@ getStorypost = async (req, res, next) => {
 
 // get post comments
 getStorycomment = async (req, res, next) => {
-    const storycomment = await getStorycommentById(req.params.getStorycommentId)
+    const storycomment = await getStorycommentById(req.params.getStorycommentId);
     
     try {
         res.send({
@@ -49,8 +61,8 @@ getStorycomment = async (req, res, next) => {
 
 
 getStorycommentFromStorypost = async (req, res, next) => {
-    console.log(req.params.getStorypostId)
-    const storycomment = await getStorycommentByStorypost(req.params.getStorypostId)
+    console.log(req.params.getStorypostId);
+    const storycomment = await getStorycommentByStorypost(req.params.getStorypostId);
     
     try {
         res.send({
@@ -65,6 +77,7 @@ getStorycommentFromStorypost = async (req, res, next) => {
 
 module.exports = {
     createStorypost,
+    createStorycomment,
     getStorypost,
     getStorycomment,
     getStorycommentFromStorypost

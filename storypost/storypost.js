@@ -2,13 +2,13 @@ const pool = require('../db/db')
 require('dotenv').config({path: '../.env'});
 
 // create post
-createStorypost = async (body) => {
+createStorypostSQL = async (body) => {
     const client = await pool.connect();
     // parameterised to prevent injection
-    let qry = 'INSERT INTO storypost (img, caption, restriction, created_at, updated_at, created_by, updated_by) VALUES ($1, $2, $3, $4, $5, $6, $7);'
+    let qry = 'INSERT INTO storypost (img, caption, restriction, created_at, updated_at, created_by, updated_by) VALUES ($1, $2, $3, to_timestamp($4), to_timestamp($5), $6, $7);'
 
     return client.query(qry, [
-        body.img,
+        '',
         body.caption,
         body.restriction,
         Date.now(),
@@ -27,7 +27,9 @@ createStorypost = async (body) => {
 // upload image file
 putImgFile = async (storyId) => {
     const client = await pool.connect();
-    // parameterised to prevent injection
+    // validate image file
+    // validate file size
+
     let qry = 'UPDATE storypost set img VALUES $1 WHERE id = $2;'
 
     return client.query(qry, [ , storyId])
@@ -41,12 +43,19 @@ putImgFile = async (storyId) => {
 }
 
 // create comment
-createStorycomment = async (storyId, body) => {
+createStorycommentSQL = async (storyId, body) => {
     const client = await pool.connect();
     // parameterised to prevent injection
-    let qry = 'INSERT INTO storypostcomment(storypost_id, comment, created_at, updated_at, created_by, updated_by) VALUES ($1, $2, $3, $4, $5, $6);'
+    let qry = 'INSERT INTO storypostcomment(storypost_id, comment, created_at, updated_at, created_by, updated_by) VALUES ($1, $2, to_timestamp($3), to_timestamp($4), $5, $6);'
 
-    return client.query(qry)
+    return client.query(qry, [
+        storyId,
+        body.comment,
+        Date.now(),
+        Date.now(),
+        body.created_by,
+        body.updated_by
+    ])
         .then(res => res.rows)
         .catch(err => {
           client.release()
@@ -116,7 +125,8 @@ getStorycommentByStorypost = async (storyId) => {
 }
 
 module.exports = {
-    createStorypost,
+    createStorypostSQL,
+    createStorycommentSQL,
     getStorypostById,
     getStorycommentById,
     getStorycommentByStorypost
