@@ -1,0 +1,7 @@
+-- this is to add random values for tests
+INSERT INTO storypost(img, caption, restriction, created_at, updated_at, created_by, updated_by) VALUES ('s3.api.some_url/', 'this is a caption', null, '2021-11-21 00:00:00+8', '2021-11-21 00:00:00+8', 'c9b1ce3a-27c5-4132-b40b-881e5b6e73ef','c9b1ce3a-27c5-4132-b40b-881e5b6e73ef');
+INSERT INTO storypost(img, caption, restriction, created_at, updated_at, created_by, updated_by) VALUES ('s3.api.some_url/', 'this is a caption 2', 'friends', '2021-11-21 00:00:00+8', '2021-11-21 00:00:00+8', 'c9b1ce3a-27c5-4132-b40b-881e5b6e73ef','c9b1ce3a-27c5-4132-b40b-881e5b6e73ef');
+
+INSERT INTO storypostcomment(storypost_id, comment, created_at, updated_at, created_by, updated_by) VALUES ('1', 'this is a comment', '2021-11-21 00:00:00+8', '2021-11-21 00:00:00+8', 'c9b1ce3a-27c5-4132-b40b-881e5b6e73ef','c9b1ce3a-27c5-4132-b40b-881e5b6e73ef');
+INSERT INTO storypostcomment(storypost_id, comment, created_at, updated_at, created_by, updated_by) VALUES ('1', 'this is a comment 2', '2021-11-21 00:00:00+8', '2021-11-21 00:00:00+8', 'c9b1ce3a-27c5-4132-b40b-881e5b6e73ef','c9b1ce3a-27c5-4132-b40b-881e5b6e73ef');
+INSERT INTO storypostcomment(storypost_id, comment, created_at, updated_at, created_by, updated_by) VALUES ('1', 'this is a comment 2', '2021-11-22 00:00:00+8', '2021-11-22 00:00:00+8', 'c9b1ce3a-27c5-4132-b40b-881e5b6e73ef','c9b1ce3a-27c5-4132-b40b-881e5b6e73ef');

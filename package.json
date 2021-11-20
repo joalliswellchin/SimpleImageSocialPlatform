@@ -1,0 +1,26 @@
+{
+  "name": "simpleimagesocialplatform",
+  "version": "1.0.0",
+  "description": "Simple Image Upload Social Platform",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joalliswellchin/SimpleImageSocialPlatform.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joalliswellchin/SimpleImageSocialPlatform/issues"
+  },
+  "homepage": "https://github.com/joalliswellchin/SimpleImageSocialPlatform#readme",
+  "dependencies": {
+    "@types/node": "^16.11.9",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {}
+}
