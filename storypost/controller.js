@@ -1,4 +1,8 @@
-const { createStorypostSQL , createStorycommentSQL , getStorypostById , getStorycommentById } = require('./storypost');
+const { createStorypostSQL , 
+    createStorycommentSQL , 
+    getStorypostById , 
+    getStorycommentById ,
+    getStorypostImgAsJPG } = require('./storypost');
 
 // create post
 createStorypost = async (req, res) => {
@@ -76,12 +80,13 @@ getStorycommentFromStorypost = async (req, res) => {
     }
 }
 
-getStorypostImgAsJPG = async (req, res, next) => {
+getStorypostImg = async (req, res, next) => {
     try {
-        const storycomment = await getStorycommentByStorypost(req.params.getStorypostId);
-        res.send({
-            data: storycomment
-        });
+        const storycomment = await getStorypostImgAsJPG(req.params.getStorypostId);
+        
+        res.writeHead(200, {'Content-Type': 'image/jpeg'});
+        res.write(storycomment.Body, 'binary');
+        res.end(null, 'binary');
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -96,5 +101,6 @@ module.exports = {
     createStorycomment,
     getStorypost,
     getStorycomment,
-    getStorycommentFromStorypost
+    getStorycommentFromStorypost,
+    getStorypostImg
 }

@@ -1,8 +1,12 @@
 const express = require('express');
 const multer  = require('multer');
 const upload = multer({ dest: 'uploads/' });
-// const { createStorypost, createStorycomment, getStorypost, getStorycomment } = require('./controller');
-const { createStorypost , createStorycomment , getStorypost , getStorycomment , getStorycommentFromStorypost } = require('./controller');
+const { createStorypost , 
+    createStorycomment , 
+    getStorypost , 
+    getStorycomment , 
+    getStorycommentFromStorypost ,
+    getStorypostImg } = require('./controller');
 const router = express.Router();
 
 router.post('/storypost/:getStorypostId/storycomment', createStorycomment);
@@ -12,6 +16,7 @@ router.post('/storypost', [upload.single('img')], createStorypost);
 
 router.get('/storypost/:getStorypostId', getStorypost);
 router.get('/storypost/', getStorypost);
+router.get('/storypost/:getStorypostId/img', getStorypostImg);
 router.get('/storypost/:getStorypostId/storycomment/', getStorycommentFromStorypost);
 
 router.get('/storycomment/:getStorycommentId', getStorycomment);

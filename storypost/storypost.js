@@ -1,7 +1,7 @@
 const { readFileSync , unlink } = require('fs');
 const pool = require('../db/db');
 require('dotenv').config({path: '../.env'});
-const { uploadFileToS3 } = require('./util');
+const { uploadFileToS3 , downloadFileFromS3 } = require('./util');
 const { validFileExt, validFileSize} = require('./validator')
 
 // create post
@@ -155,10 +155,23 @@ getStorycommentByStorypost = async (storyId) => {
         .finally(() => client.release());
 }
 
+getStorypostImgAsJPG = async (storyId) => {
+    const client = await pool.connect();
+    let qry = 'SELECT storypost.img FROM storypost WHERE storypost.id = $1';
+    return results = client.query(qry, [storyId])
+        .then((res) => downloadFileFromS3(res.rows[0].img))
+        .catch(err => {
+          console.log(err);
+          throw err;
+        })
+        .finally(() => client.release());
+}
+
 module.exports = {
     createStorypostSQL,
     createStorycommentSQL,
     getStorypostById,
     getStorycommentById,
-    getStorycommentByStorypost
+    getStorycommentByStorypost,
+    getStorypostImgAsJPG
 }

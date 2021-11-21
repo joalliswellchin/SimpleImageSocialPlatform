@@ -34,6 +34,32 @@ uploadFileToS3 = (filename, buffer) => {
     );
 }
 
+downloadFileFromS3 = (filename) => {
+    if (!filename.includes(`s3://${BUCKET_NAME}`)) {
+        throw 'Not a S3 directory'
+    }
+    else {
+        filename = filename.substring(`s3://${BUCKET_NAME}/`.length)
+    }
+
+    const params = {
+        Bucket: BUCKET_NAME,
+        Key: filename
+    };
+    return new Promise((resolve, reject) =>
+        S3.getObject( params, (err , data) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        }
+      )
+    );
+}
+
+
 module.exports = {
-    uploadFileToS3
+    uploadFileToS3,
+    downloadFileFromS3
 }
