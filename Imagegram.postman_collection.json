@@ -41,7 +41,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/imagegram/storypost",
+					"raw": "localhost:3001/imagegram/storypost?skip=1",
 					"host": [
 						"localhost"
 					],
@@ -49,6 +49,17 @@
 					"path": [
 						"imagegram",
 						"storypost"
+					],
+					"query": [
+						{
+							"key": "top",
+							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "skip",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -92,7 +103,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3001/imagegram/storypost/3/storycomment",
+					"raw": "localhost:3001/imagegram/storypost/3/storycomment?top=3&skip=1",
 					"host": [
 						"localhost"
 					],
@@ -102,6 +113,16 @@
 						"storypost",
 						"3",
 						"storycomment"
+					],
+					"query": [
+						{
+							"key": "top",
+							"value": "3"
+						},
+						{
+							"key": "skip",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -158,7 +179,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3001/imagegram/storycomment",
+					"raw": "localhost:3001/imagegram/storycomment?top=2&skip=1",
 					"host": [
 						"localhost"
 					],
@@ -166,6 +187,16 @@
 					"path": [
 						"imagegram",
 						"storycomment"
+					],
+					"query": [
+						{
+							"key": "top",
+							"value": "2"
+						},
+						{
+							"key": "skip",
+							"value": "1"
+						}
 					]
 				}
 			},
