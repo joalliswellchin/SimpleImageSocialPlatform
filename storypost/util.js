@@ -5,13 +5,13 @@ require('dotenv').config({path: '../.env'});
 
 // upload to s3
 const BUCKET_NAME = process.env.S3_FOLDER ||  "sisp1";
-const bucketRegion = process.env.AWS_REGION || "ap-southeast-1";
+const region = process.env.AWS_REGION || "ap-southeast-1";
 const IdentityPoolId = process.env.COGNITO_POOL_ID || "7fe15099-1a93-4042-b906-39229a3f27b2";
 
 AWS.config.update({
-    region: bucketRegion,
+    region: region,
     credentials: new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: IdentityPoolId
+      IdentityPoolId: `${region}:${IdentityPoolId}`
     })
   });
 const S3 = new AWS.S3({});

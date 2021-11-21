@@ -1,4 +1,4 @@
-const { readFileSync } = require('fs');
+const { readFileSync , unlink } = require('fs');
 const pool = require('../db/db')
 require('dotenv').config({path: '../.env'});
 const { uploadFileToS3 } = require('./util')
@@ -25,8 +25,8 @@ createStorypostSQL = async (req) => {
         ])
             .then(res => res.rows)
             .catch(err => {
-              client.release()
-              console.log(err)
+              client.release();
+              console.log(err);
             })
             .finally(() => client.release());
     }
@@ -37,6 +37,16 @@ createStorypostSQL = async (req) => {
     // to exceed volume
     console.log(req.file.path)
     uploadFileToS3(req.file.path, readFileSync(req.file.path))
+        .catch(err => {
+            console.log(err);
+        })
+        // comment this out to prevent file removal on local
+        .finally(
+            unlink(req.file.path, err => {
+                    console.log(err);
+                }
+            )
+        )
 
     return client.query(qry, [
         `s3://${process.env.S3_FOLDER}/${req.file.filename}`,
