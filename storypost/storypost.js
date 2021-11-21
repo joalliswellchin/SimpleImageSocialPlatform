@@ -97,12 +97,13 @@ createStorycommentSQL = async (storyId, body) => {
 // get all post
 getStorypostById = async (storyId) => {
     const client = await pool.connect();
-    let qry = 'SELECT * FROM storypost';
+    let qry = 'SELECT storypost.*, count(storypostcomment.storypost_id) FROM storypost LEFT JOIN storypostcomment ON storypostcomment.storypost_id = storypost.id';
+    let qry_end = ' GROUP BY storypost.id ORDER BY COUNT(storypostcomment.storypost_id) DESC'
     if (storyId != null) {
-        qry += ' WHERE storypost.id = $1';
-        results = client.query(qry, [storyId]);
+        qry += ' AND storypost.id = $1';
+        results = client.query(qry + qry_end, [storyId]);
     } else {
-        results = client.query(qry)
+        results = client.query(qry + qry_end)
     }
     
     return results.then(res => res.rows)
@@ -157,7 +158,6 @@ getStorycommentByStorypost = async (storyId) => {
 module.exports = {
     createStorypostSQL,
     createStorycommentSQL,
-    // putImgFile,
     getStorypostById,
     getStorycommentById,
     getStorycommentByStorypost
