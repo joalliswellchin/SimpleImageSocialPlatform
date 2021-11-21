@@ -2,6 +2,7 @@ const { readFileSync , unlink } = require('fs');
 const pool = require('../db/db');
 require('dotenv').config({path: '../.env'});
 const { uploadFileToS3 } = require('./util');
+const { validFileExt, validFileSize} = require('./validator')
 
 // create post
 createStorypostSQL = async (req) => {
@@ -32,10 +33,16 @@ createStorypostSQL = async (req) => {
     }
 
     // validate image file
+    if (!validFileExt(req.file.mimetype)) {
+        throw 'File extension must be JPEG PNG or BMP'
+    }
     // validate file size
+    if (!validFileSize(req.file.size)) {
+        throw `File size must be less than ${process.env.MAX_FILE_LIMIT}`
+    }
     // upload to aws S3. Avoiding local storage due to high potential
     // to exceed disk volume
-    uploadFileToS3(req.file.path, readFileSync(req.file.path))
+    uploadFileToS3(req.file.destination + req.file.originalname, readFileSync(req.file.path))
         .catch(err => {
             console.log(err);
             throw err;
