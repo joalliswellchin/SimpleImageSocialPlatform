@@ -43,12 +43,14 @@ Install Postman here: https://www.postman.com/downloads/
 6. Moving downloads to direct from S3, instead of from restful API
 7. There is a LIMIT 2 on comments. We can consider to improve instead of a hardcoded X per post!
 8. Pagination (e.g. pagesize=10&pageafter=XXXXX)
+9. Unit tests!
 
 ## Always remember:
 1. Index when you need to
 2. clean code is never mean code
 3. Try to DRY or KISS
-4. Stay Positive! Code doesn't kill you so it makes you stronger :)
+4. Always make an effort to test
+5. Stay Positive! Code doesn't kill you so it makes you stronger :)
 
 ## FYI
 1. S3 has been graciously provided for a temporary period :)
