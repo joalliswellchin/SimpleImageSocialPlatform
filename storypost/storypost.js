@@ -1,7 +1,7 @@
 const { readFileSync , unlink } = require('fs');
-const pool = require('../db/db')
+const pool = require('../db/db');
 require('dotenv').config({path: '../.env'});
-const { uploadFileToS3 } = require('./util')
+const { uploadFileToS3 } = require('./util');
 
 // create post
 createStorypostSQL = async (req) => {
@@ -11,7 +11,7 @@ createStorypostSQL = async (req) => {
 
     restriction = req.body.restriction
     if (!restriction){
-        restriction = null
+        restriction = null;
     }
     if (!req.file) {
         return client.query(qry, [
@@ -25,8 +25,8 @@ createStorypostSQL = async (req) => {
         ])
             .then(res => res.rows)
             .catch(err => {
-              client.release();
               console.log(err);
+              throw err;
             })
             .finally(() => client.release());
     }
@@ -34,11 +34,11 @@ createStorypostSQL = async (req) => {
     // validate image file
     // validate file size
     // upload to aws S3. Avoiding local storage due to high potential
-    // to exceed volume
-    console.log(req.file.path)
+    // to exceed disk volume
     uploadFileToS3(req.file.path, readFileSync(req.file.path))
         .catch(err => {
             console.log(err);
+            throw err;
         })
         // comment this out to prevent file removal on local
         .finally(
@@ -46,7 +46,7 @@ createStorypostSQL = async (req) => {
                     console.log(err);
                 }
             )
-        )
+        );
 
     return client.query(qry, [
         `s3://${process.env.S3_FOLDER}/${req.file.filename}`,
@@ -59,26 +59,11 @@ createStorypostSQL = async (req) => {
     ])
         .then(res => res.rows)
         .catch(err => {
-          client.release()
-          console.log(err)
+          console.log(err);
+          throw err;
         })
         .finally(() => client.release());
 }
-
-// upload image file
-// putImgFile = async (storyId) => {
-//     const client = await pool.connect();
-//     let qry = 'UPDATE storypost set img VALUES $1 WHERE id = $2;'
-
-//     return client.query(qry, [ , storyId])
-//         .then(res => res.rows)
-//         .catch(err => {
-//           client.release()
-//           console.log(err)
-//         })
-//         .finally(() => client.release());
-
-// }
 
 // create comment
 createStorycommentSQL = async (storyId, body) => {
@@ -96,8 +81,8 @@ createStorycommentSQL = async (storyId, body) => {
     ])
         .then(res => res.rows)
         .catch(err => {
-          client.release()
-          console.log(err)
+          console.log(err);
+          throw err;
         })
         .finally(() => client.release());
 }
@@ -105,18 +90,18 @@ createStorycommentSQL = async (storyId, body) => {
 // get all post
 getStorypostById = async (storyId) => {
     const client = await pool.connect();
-    let qry = 'SELECT * FROM storypost'
+    let qry = 'SELECT * FROM storypost';
     if (storyId != null) {
-        qry += ' WHERE storypost.id = $1'
-        results = client.query(qry, [storyId])
+        qry += ' WHERE storypost.id = $1';
+        results = client.query(qry, [storyId]);
     } else {
         results = client.query(qry)
     }
     
     return results.then(res => res.rows)
         .catch(err => {
-          client.release()
-          console.log(err)
+          console.log(err);
+          throw err;
         })
         .finally(() => client.release());
 }
@@ -126,18 +111,18 @@ getStorycommentById = async (storyCommentId) => {
     const client = await pool.connect();
     let qry = 'SELECT storypostcomment.*'+ 
     ' FROM storypostcomment, storypost'+
-    ' WHERE storypostcomment.storypost_id = storypost.id '
-    qry_end = ' ORDER BY storypostcomment.updated_at DESC LIMIT '+ process.env.COMMENT_LIMIT
+    ' WHERE storypostcomment.storypost_id = storypost.id ';
+    qry_end = ' ORDER BY storypostcomment.updated_at DESC LIMIT '+ process.env.COMMENT_LIMIT;
     if (storyCommentId != null) {
-        qry += ' AND storypostcomment.id = $1'
-        results = client.query(qry + qry_end, [storyCommentId])
+        qry += ' AND storypostcomment.id = $1';
+        results = client.query(qry + qry_end, [storyCommentId]);
     } else {
-        results = client.query(qry + qry_end)
+        results = client.query(qry + qry_end);
     }
     return results.then(res => res.rows)
         .catch(err => {
-          client.release()
-          console.log(err.stack)
+          console.log(err);
+          throw err;
         })
         .finally(() => client.release());
 }
@@ -147,17 +132,17 @@ getStorycommentByStorypost = async (storyId) => {
     let qry = 'SELECT storypostcomment.*'+ 
     ' FROM storypostcomment, storypost'+
     ' WHERE storypostcomment.storypost_id = storypost.id '
-    qry_end = ' ORDER BY storypostcomment.updated_at DESC LIMIT '+ process.env.COMMENT_LIMIT
+    qry_end = ' ORDER BY storypostcomment.updated_at DESC LIMIT '+ process.env.COMMENT_LIMIT;
     if (storyId != null) {
-        qry += ' AND storypost.id = $1'
-        results = client.query(qry + qry_end, [storyId])
+        qry += ' AND storypost.id = $1';
+        results = client.query(qry + qry_end, [storyId]);
     } else {
-        results = client.query(qry + qry_end)
+        results = client.query(qry + qry_end);
     }
     return results.then(res => res.rows)
         .catch(err => {
-          client.release()
-          console.log(err.stack)
+          console.log(err);
+          throw err;
         })
         .finally(() => client.release());
 }

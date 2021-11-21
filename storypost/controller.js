@@ -2,87 +2,77 @@ const { createStorypostSQL , createStorycommentSQL , getStorypostById , getStory
 
 // create post
 createStorypost = async (req, res, next) => {
-    const storypost = await createStorypostSQL(req);
-    
     try {
+        const storypost = await createStorypostSQL(req);
         res.status(201).send({
             data: storypost
         });
     } catch (error) {
         console.log(error);
-        next(Error(error.message));
+        res.status(500).json({
+            desciption: error
+        });
     }
 }
 
-// create post
-// updateStorypost = async (req, res, next) => {
-//     const storypost = await putImgFile(req.body);
-    
-//     try {
-//         res.status(201).send({
-//             data: storypost
-//         });
-//     } catch (error) {
-//         console.log(error);
-//         next(Error(error.message));
-//     }
-// }
-
 // create comment
 createStorycomment = async (req, res, next) => {
-    const storypost = await createStorycommentSQL(req.params.getStorypostId, req.body);
-    
     try {
+        const storypost = await createStorycommentSQL(req.params.getStorypostId, req.body);
         res.status(201).send({
             data: storypost
         });
     } catch (error) {
         console.log(error);
-        next(Error(error.message));
+        res.status(500).json({
+            desciption: error
+        });
     }
 }
 
 
 // get all post
 getStorypost = async (req, res, next) => {
-    const storypost = await getStorypostById(req.params.getStorypostId);
-    
     try {
+        const storypost = await getStorypostById(req.params.getStorypostId);
         res.send({
             data: storypost
         });
     } catch (error) {
         console.log(error);
-        next(Error(error.message));
+        res.status(500).json({
+            desciption: error
+        });
     }
 }
 
 // get post comments
 getStorycomment = async (req, res, next) => {
-    const storycomment = await getStorycommentById(req.params.getStorycommentId);
-    
     try {
+        const storycomment = await getStorycommentById(req.params.getStorycommentId);
         res.send({
             data: storycomment
         });
     } catch (error) {
         console.log(error);
-        next(Error(error.message));
+        res.status(500).json({
+            desciption: error
+        });
     }
 }
 
 
 getStorycommentFromStorypost = async (req, res, next) => {
-    console.log(req.params.getStorypostId);
-    const storycomment = await getStorycommentByStorypost(req.params.getStorypostId);
-    
     try {
+        const storycomment = await getStorycommentByStorypost(req.params.getStorypostId);
         res.send({
             data: storycomment
         });
     } catch (error) {
         console.log(error);
-        next(Error(error.message));
+        res.status(500).json({
+            desciption: error
+        });
     }
 }
 
