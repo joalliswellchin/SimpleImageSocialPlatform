@@ -1,0 +1,286 @@
+{
+	"info": {
+		"_postman_id": "51cb9986-f686-440b-86e8-414f1c33309d",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "healthcheck imagegram",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"img\": \"\",\r\n    \"caption\":\"\",\r\n    \"restriction\":null,\r\n    \"created_by\": \"\",\r\n    \"updated_by\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/imagegram",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"imagegram"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get storypost",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/imagegram/storypost",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"imagegram",
+						"storypost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get storypost by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/imagegram/storypost",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"imagegram",
+						"storypost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get storycomment by storypost",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/imagegram/storycomment",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"imagegram",
+						"storycomment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get storycomment",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/imagegram/storypost/1/storycomment",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"imagegram",
+						"storypost",
+						"1",
+						"storycomment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get storycomment by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/imagegram/storypost/1/storycomment",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"imagegram",
+						"storypost",
+						"1",
+						"storycomment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create storypost without img",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"img\": \"\",\r\n    \"caption\":\"\",\r\n    \"restriction\":null,\r\n    \"created_by\": \"\",\r\n    \"updated_by\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/imagegram/storypost",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"imagegram",
+						"storypost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create storycomment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"comment\": \"\",\r\n    \"created_by\": \"\",\r\n    \"updated_by\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/imagegram/storypost/18/storycomment",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"imagegram",
+						"storypost",
+						"18",
+						"storycomment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create storypost with img",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "img",
+							"type": "file",
+							"src": "image1.jpeg"
+						},
+						{
+							"key": "caption",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "restriction",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "created_by",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "updated_by",
+							"value": "",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/imagegram/storypost",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"imagegram",
+						"storypost"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

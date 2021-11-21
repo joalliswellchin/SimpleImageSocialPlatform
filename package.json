@@ -4,6 +4,8 @@
   "description": "Simple Image Upload Social Platform",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "initdb": "psql -U postgres -f db/init_db.sql",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
