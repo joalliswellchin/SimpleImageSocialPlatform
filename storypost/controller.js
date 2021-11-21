@@ -1,7 +1,7 @@
 const { createStorypostSQL , createStorycommentSQL , getStorypostById , getStorycommentById } = require('./storypost');
 
 // create post
-createStorypost = async (req, res, next) => {
+createStorypost = async (req, res) => {
     try {
         const storypost = await createStorypostSQL(req);
         res.status(201).send({
@@ -16,7 +16,7 @@ createStorypost = async (req, res, next) => {
 }
 
 // create comment
-createStorycomment = async (req, res, next) => {
+createStorycomment = async (req, res) => {
     try {
         const storypost = await createStorycommentSQL(req.params.getStorypostId, req.body);
         res.status(201).send({
@@ -32,7 +32,7 @@ createStorycomment = async (req, res, next) => {
 
 
 // get all post
-getStorypost = async (req, res, next) => {
+getStorypost = async (req, res) => {
     try {
         const storypost = await getStorypostById(req.params.getStorypostId);
         res.send({
@@ -47,7 +47,7 @@ getStorypost = async (req, res, next) => {
 }
 
 // get post comments
-getStorycomment = async (req, res, next) => {
+getStorycomment = async (req, res) => {
     try {
         const storycomment = await getStorycommentById(req.params.getStorycommentId);
         res.send({
@@ -62,7 +62,21 @@ getStorycomment = async (req, res, next) => {
 }
 
 
-getStorycommentFromStorypost = async (req, res, next) => {
+getStorycommentFromStorypost = async (req, res) => {
+    try {
+        const storycomment = await getStorycommentByStorypost(req.params.getStorypostId);
+        res.send({
+            data: storycomment
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            desciption: error
+        });
+    }
+}
+
+getStorypostImgAsJPG = async (req, res, next) => {
     try {
         const storycomment = await getStorycommentByStorypost(req.params.getStorypostId);
         res.send({

@@ -100,7 +100,7 @@ getStorypostById = async (storyId) => {
     let qry = 'SELECT storypost.*, count(storypostcomment.storypost_id) FROM storypost LEFT JOIN storypostcomment ON storypostcomment.storypost_id = storypost.id';
     let qry_end = ' GROUP BY storypost.id ORDER BY COUNT(storypostcomment.storypost_id) DESC'
     if (storyId != null) {
-        qry += ' AND storypost.id = $1';
+        qry += ' WHERE storypost.id = $1';
         results = client.query(qry + qry_end, [storyId]);
     } else {
         results = client.query(qry + qry_end)
