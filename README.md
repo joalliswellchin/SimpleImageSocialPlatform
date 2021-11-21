@@ -42,6 +42,7 @@ Install Postman here: https://www.postman.com/downloads/
 5. Consider moving to graphql. Resolvers can be useful in certain deeply nested REST API, and making data transfer faster due to the streamlined data requested.
 6. Moving downloads to direct from S3, instead of from restful API
 7. There is a LIMIT 2 on comments. We can consider to improve instead of a hardcoded X per post!
+8. Pagination (e.g. pagesize=10&pageafter=XXXXX)
 
 ## Always remember:
 1. Index when you need to
