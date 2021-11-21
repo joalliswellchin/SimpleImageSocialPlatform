@@ -95,10 +95,16 @@ createStorycommentSQL = async (storyId, body) => {
 }
 
 // get all post
-getStorypostById = async (storyId) => {
+getStorypostById = async (storyId, reqQuery) => {
     const client = await pool.connect();
     let qry = 'SELECT storypost.*, count(storypostcomment.storypost_id) FROM storypost LEFT JOIN storypostcomment ON storypostcomment.storypost_id = storypost.id';
     let qry_end = ' GROUP BY storypost.id ORDER BY COUNT(storypostcomment.storypost_id) DESC'
+    if (!isNaN(reqQuery.skip)){
+        qry_end += ` OFFSET ${reqQuery.skip}`
+    }
+    if (!isNaN(reqQuery.top)){
+        qry_end += ` LIMIT ${reqQuery.top}`
+    }
     if (storyId != null) {
         qry += ' WHERE storypost.id = $1';
         results = client.query(qry + qry_end, [storyId]);
@@ -115,12 +121,20 @@ getStorypostById = async (storyId) => {
 }
 
 // get post comments
-getStorycommentById = async (storyCommentId) => {
+getStorycommentById = async (storyCommentId, reqQuery) => {
     const client = await pool.connect();
     let qry = 'SELECT storypostcomment.*'+ 
     ' FROM storypostcomment, storypost'+
     ' WHERE storypostcomment.storypost_id = storypost.id ';
-    qry_end = ' ORDER BY storypostcomment.updated_at DESC LIMIT '+ process.env.COMMENT_LIMIT;
+    qry_end = ' ORDER BY storypostcomment.updated_at DESC';
+    if (!isNaN(reqQuery.skip)){
+        qry_end += ` OFFSET ${reqQuery.skip}`
+    }
+    if (!isNaN(reqQuery.top)){
+        qry_end += ` LIMIT ${reqQuery.top}`
+    } else {
+        qry_end += ` LIMIT ${process.env.COMMENT_LIMIT}`
+    }
     if (storyCommentId != null) {
         qry += ' AND storypostcomment.id = $1';
         results = client.query(qry + qry_end, [storyCommentId]);
@@ -135,12 +149,20 @@ getStorycommentById = async (storyCommentId) => {
         .finally(() => client.release());
 }
 
-getStorycommentByStorypost = async (storyId) => {
+getStorycommentByStorypost = async (storyId, reqQuery) => {
     const client = await pool.connect();
     let qry = 'SELECT storypostcomment.*'+ 
     ' FROM storypostcomment, storypost'+
     ' WHERE storypostcomment.storypost_id = storypost.id '
-    qry_end = ' ORDER BY storypostcomment.updated_at DESC LIMIT '+ process.env.COMMENT_LIMIT;
+    qry_end = ' ORDER BY storypostcomment.updated_at DESC'
+    if (!isNaN(reqQuery.skip)){
+        qry_end += ` OFFSET ${reqQuery.skip}`
+    }
+    if (!isNaN(reqQuery.top)){
+        qry_end += ` LIMIT ${reqQuery.top}`
+    } else {
+        qry_end += ` LIMIT ${process.env.COMMENT_LIMIT}`
+    }
     if (storyId != null) {
         qry += ' AND storypost.id = $1';
         results = client.query(qry + qry_end, [storyId]);

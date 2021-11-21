@@ -38,7 +38,7 @@ createStorycomment = async (req, res) => {
 // get all post
 getStorypost = async (req, res) => {
     try {
-        const storypost = await getStorypostById(req.params.getStorypostId);
+        const storypost = await getStorypostById(req.params.getStorypostId, req.query);
         res.send({
             data: storypost
         });
@@ -53,7 +53,7 @@ getStorypost = async (req, res) => {
 // get post comments
 getStorycomment = async (req, res) => {
     try {
-        const storycomment = await getStorycommentById(req.params.getStorycommentId);
+        const storycomment = await getStorycommentById(req.params.getStorycommentId, req.query);
         res.send({
             data: storycomment
         });
@@ -68,7 +68,7 @@ getStorycomment = async (req, res) => {
 
 getStorycommentFromStorypost = async (req, res) => {
     try {
-        const storycomment = await getStorycommentByStorypost(req.params.getStorypostId);
+        const storycomment = await getStorycommentByStorypost(req.params.getStorypostId, req.query);
         res.send({
             data: storycomment
         });

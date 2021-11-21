@@ -210,12 +210,7 @@
 				"header": [],
 				"body": {
 					"mode": "formdata",
-					"formdata": [],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"formdata": []
 				},
 				"url": {
 					"raw": "localhost:3001/imagegram/storypost",
@@ -294,12 +289,7 @@
 							"value": "",
 							"type": "text"
 						}
-					],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					]
 				},
 				"url": {
 					"raw": "localhost:3001/imagegram/storypost",
