@@ -1,10 +1,8 @@
-const express = require('express');
-const { nextTick } = require('process');
 const { createStorypostSQL , createStorycommentSQL , getStorypostById , getStorycommentById } = require('./storypost');
 
 // create post
 createStorypost = async (req, res, next) => {
-    const storypost = await createStorypostSQL(req.body);
+    const storypost = await createStorypostSQL(req);
     
     try {
         res.status(201).send({
@@ -15,6 +13,20 @@ createStorypost = async (req, res, next) => {
         next(Error(error.message));
     }
 }
+
+// create post
+// updateStorypost = async (req, res, next) => {
+//     const storypost = await putImgFile(req.body);
+    
+//     try {
+//         res.status(201).send({
+//             data: storypost
+//         });
+//     } catch (error) {
+//         console.log(error);
+//         next(Error(error.message));
+//     }
+// }
 
 // create comment
 createStorycomment = async (req, res, next) => {

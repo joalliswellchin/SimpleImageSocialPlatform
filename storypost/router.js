@@ -1,10 +1,14 @@
 const express = require('express');
+const multer  = require('multer');
+const upload = multer({ dest: 'uploads/' });
 // const { createStorypost, createStorycomment, getStorypost, getStorycomment } = require('./controller');
 const { createStorypost , createStorycomment , getStorypost , getStorycomment , getStorycommentFromStorypost } = require('./controller');
 const router = express.Router();
 
 router.post('/storypost/:getStorypostId/storycomment', createStorycomment);
-router.post('/storypost', createStorypost);
+router.post('/storypost', [upload.single('img')], createStorypost);
+
+// router.post('/storypost/:getStorypostId/img', updateStorypost);
 
 router.get('/storypost/:getStorypostId', getStorypost);
 router.get('/storypost/', getStorypost);

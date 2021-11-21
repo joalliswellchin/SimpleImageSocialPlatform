@@ -1,20 +1,51 @@
+const { readFileSync } = require('fs');
 const pool = require('../db/db')
 require('dotenv').config({path: '../.env'});
+const { uploadFileToS3 } = require('./util')
 
 // create post
-createStorypostSQL = async (body) => {
+createStorypostSQL = async (req) => {
     const client = await pool.connect();
     // parameterised to prevent injection
     let qry = 'INSERT INTO storypost (img, caption, restriction, created_at, updated_at, created_by, updated_by) VALUES ($1, $2, $3, to_timestamp($4), to_timestamp($5), $6, $7);'
 
+    restriction = req.body.restriction
+    if (!restriction){
+        restriction = null
+    }
+    if (!req.file) {
+        return client.query(qry, [
+            '',
+            req.body.caption,
+            restriction,
+            Date.now(),
+            Date.now(),
+            req.body.created_by,
+            req.body.updated_by
+        ])
+            .then(res => res.rows)
+            .catch(err => {
+              client.release()
+              console.log(err)
+            })
+            .finally(() => client.release());
+    }
+
+    // validate image file
+    // validate file size
+    // upload to aws S3. Avoiding local storage due to high potential
+    // to exceed volume
+    console.log(req.file.path)
+    uploadFileToS3(req.file.path, readFileSync(req.file.path))
+
     return client.query(qry, [
-        '',
-        body.caption,
-        body.restriction,
+        `s3://${process.env.S3_FOLDER}/${req.file.filename}`,
+        req.body.caption,
+        restriction,
         Date.now(),
         Date.now(),
-        body.created_by,
-        body.updated_by
+        req.body.created_by,
+        req.body.updated_by
     ])
         .then(res => res.rows)
         .catch(err => {
@@ -25,22 +56,19 @@ createStorypostSQL = async (body) => {
 }
 
 // upload image file
-putImgFile = async (storyId) => {
-    const client = await pool.connect();
-    // validate image file
-    // validate file size
+// putImgFile = async (storyId) => {
+//     const client = await pool.connect();
+//     let qry = 'UPDATE storypost set img VALUES $1 WHERE id = $2;'
 
-    let qry = 'UPDATE storypost set img VALUES $1 WHERE id = $2;'
+//     return client.query(qry, [ , storyId])
+//         .then(res => res.rows)
+//         .catch(err => {
+//           client.release()
+//           console.log(err)
+//         })
+//         .finally(() => client.release());
 
-    return client.query(qry, [ , storyId])
-        .then(res => res.rows)
-        .catch(err => {
-          client.release()
-          console.log(err)
-        })
-        .finally(() => client.release());
-
-}
+// }
 
 // create comment
 createStorycommentSQL = async (storyId, body) => {
@@ -127,6 +155,7 @@ getStorycommentByStorypost = async (storyId) => {
 module.exports = {
     createStorypostSQL,
     createStorycommentSQL,
+    // putImgFile,
     getStorypostById,
     getStorycommentById,
     getStorycommentByStorypost
