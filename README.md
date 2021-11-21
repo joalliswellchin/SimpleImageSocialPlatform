@@ -41,6 +41,7 @@ Install Postman here: https://www.postman.com/downloads/
 4. Raw SQL is used here due to lack of experience with NodeJS ORM modules. Some examples of ORM are Sequelize. ORM can be helpful to add more velocity and migration tools if needed. Should you desire to do raw SQL still, flyway or sqitch are great tools. Otherwise to do migration, create a new migration folder and add .sql files. Always be careful of using raw SQL, even though this raw SQL development is temporary.
 5. Consider moving to graphql. Resolvers can be useful in certain deeply nested REST API, and making data transfer faster due to the streamlined data requested.
 6. Moving downloads to direct from S3, instead of from restful API
+7. There is a LIMIT 2 on comments. We can consider to improve instead of a hardcoded X per post!
 
 ## Always remember:
 1. Index when you need to

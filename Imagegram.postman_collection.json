@@ -92,7 +92,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3001/imagegram/storypost/1/storycomment",
+					"raw": "localhost:3001/imagegram/storypost/3/storycomment",
 					"host": [
 						"localhost"
 					],
@@ -100,8 +100,41 @@
 					"path": [
 						"imagegram",
 						"storypost",
-						"1",
+						"3",
 						"storycomment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get jpg img by storypost",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/imagegram/storypost/8/img",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"imagegram",
+						"storypost",
+						"8",
+						"img"
 					]
 				}
 			},
@@ -176,8 +209,8 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"img\": \"\",\r\n    \"caption\":\"\",\r\n    \"restriction\":null,\r\n    \"created_by\": \"\",\r\n    \"updated_by\": \"\"\r\n}",
+					"mode": "formdata",
+					"formdata": [],
 					"options": {
 						"raw": {
 							"language": "json"
@@ -213,7 +246,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3001/imagegram/storypost/18/storycomment",
+					"raw": "localhost:3001/imagegram/storypost/3/storycomment",
 					"host": [
 						"localhost"
 					],
@@ -221,7 +254,7 @@
 					"path": [
 						"imagegram",
 						"storypost",
-						"18",
+						"3",
 						"storycomment"
 					]
 				}
