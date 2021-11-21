@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "51cb9986-f686-440b-86e8-414f1c33309d",
-		"name": "New Collection",
+		"name": "Imagegram",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -60,14 +60,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/imagegram/storypost",
+					"raw": "localhost:3001/imagegram/storypost/1",
 					"host": [
 						"localhost"
 					],
 					"port": "3001",
 					"path": [
 						"imagegram",
-						"storypost"
+						"storypost",
+						"1"
 					]
 				}
 			},
@@ -75,6 +76,39 @@
 		},
 		{
 			"name": "get storycomment by storypost",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/imagegram/storypost/1/storycomment",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"imagegram",
+						"storypost",
+						"1",
+						"storycomment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get storycomment",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -105,39 +139,6 @@
 			"response": []
 		},
 		{
-			"name": "get storycomment",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:3001/imagegram/storypost/1/storycomment",
-					"host": [
-						"localhost"
-					],
-					"port": "3001",
-					"path": [
-						"imagegram",
-						"storypost",
-						"1",
-						"storycomment"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "get storycomment by id",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -155,16 +156,15 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3001/imagegram/storypost/1/storycomment",
+					"raw": "localhost:3001/imagegram/storycomment/1",
 					"host": [
 						"localhost"
 					],
 					"port": "3001",
 					"path": [
 						"imagegram",
-						"storypost",
-						"1",
-						"storycomment"
+						"storycomment",
+						"1"
 					]
 				}
 			},
